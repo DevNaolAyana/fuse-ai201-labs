@@ -96,28 +96,58 @@
 #         print(item)
 
 
-import numpy as np
-scores = np.array([70, 80, 90, 85, 75])
+                    # import numpy as np
+                    # scores = np.array([70, 80, 90, 85, 75])
 
-print("Average:", np.mean(scores))
-print("Highest:", np.max(scores))
-
-
-print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-sales = np.array([200, 250, 300, 400])
-
-growth = sales * 1.1
-
-print(growth)
+                    # print("Average:", np.mean(scores))
+                    # print("Highest:", np.max(scores))
 
 
-yield_data = np.array([2.5, 3.0, 3.2, 2.8])
+                    # print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+                    # sales = np.array([200, 250, 300, 400])
 
-print("Average Yield:", np.mean(yield_data))
+                    # growth = sales * 1.1
+
+                    # print(growth)
 
 
-image = np.array([
-    [255, 0, 0],
-    [0, 255, 0],
-    [0, 0, 255]
-])
+                    # yield_data = np.array([2.5, 3.0, 3.2, 2.8])
+
+                    # print("Average Yield:", np.mean(yield_data))
+
+
+                    # image = np.array([
+                    #     [255, 0, 0],
+                    #     [0, 255, 0],
+                    #     [0, 0, 255]
+                    # ])
+
+
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+
+# Load data from mosh-projects folder
+df = pd.read_csv("../mosh-projects/music.csv")
+
+# Preview data
+print(df.head())
+
+# Matplotlib: Line plot
+plt.plot(df["age"], df["genre"])  # Adjust column names as needed
+plt.title("Music Data")
+plt.xlabel("Age")
+plt.ylabel("Genre")
+plt.show()
+
+# Seaborn: Heatmap (only works with numeric columns)
+# Select only numeric columns for correlation
+numeric_df = df.select_dtypes(include=['number'])
+sns.heatmap(numeric_df.corr(), annot=True)
+plt.title("Feature Correlation")
+plt.show()
+
+# Seaborn: Pair plot (only numeric columns)
+sns.pairplot(numeric_df)
+plt.show()
