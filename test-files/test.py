@@ -8,11 +8,11 @@
 #     print(f"You are {converted_weight} kilos")
 
 
-def lbs_to_kg(weight):
-    return weight / 2.205
+# def lbs_to_kg(weight):
+#     return weight / 2.205
 
-def kg_to_lbs(weight):
-    return weight * 2.205
+# def kg_to_lbs(weight):
+#     return weight * 2.205
 # Guessed_number = int(input("Guess: "))
 # number=9
 # i = 1 
@@ -94,3 +94,30 @@ def kg_to_lbs(weight):
 # for row in matrix:
 #     for item in row:
 #         print(item)
+
+
+import numpy as np
+scores = np.array([70, 80, 90, 85, 75])
+
+print("Average:", np.mean(scores))
+print("Highest:", np.max(scores))
+
+
+print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+sales = np.array([200, 250, 300, 400])
+
+growth = sales * 1.1
+
+print(growth)
+
+
+yield_data = np.array([2.5, 3.0, 3.2, 2.8])
+
+print("Average Yield:", np.mean(yield_data))
+
+
+image = np.array([
+    [255, 0, 0],
+    [0, 255, 0],
+    [0, 0, 255]
+])
