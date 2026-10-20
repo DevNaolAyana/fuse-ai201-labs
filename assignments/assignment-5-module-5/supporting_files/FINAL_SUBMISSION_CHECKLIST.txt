@@ -1,0 +1,14 @@
+GROUP 16 — FINAL SUBMISSION CHECKLIST
+
+[x] Replace notebook TODOs with the exact implementation source code.
+[x] Run all notebook cells from a clean environment and verify reported metrics.
+[x] Include the actual trained model and any preprocessing/scaling artifacts.
+[x] Include the actual browser application source and a tested launch command.
+[x] Include the dataset if redistribution is permitted; otherwise include download instructions.
+[x] Confirm requirements.txt matches the final code.
+[x] Re-run input validation and browser integration tests; retain evidence if required.
+[x] Confirm each listed member participated and document actual individual contributions.
+[x] Ensure report results match notebook outputs.
+[x] Zip the complete project and test it on another environment if possible.
+
+Status: VERIFIED & COMPLETED. All required models, application code, notebook stages, and report metrics are synchronized.

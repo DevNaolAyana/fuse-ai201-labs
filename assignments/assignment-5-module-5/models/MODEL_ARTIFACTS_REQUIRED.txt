@@ -1,0 +1,2 @@
+Place the actual trained Random Forest model and any preprocessing artifacts here.
+The written report does not include these binary artifacts. Do not represent a placeholder as a trained model.

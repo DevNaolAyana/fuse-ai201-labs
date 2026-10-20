@@ -1,0 +1,3 @@
+Download the Credit Card Fraud Detection dataset from https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud
+Place the CSV here as creditcard.csv, or update DATA_PATH in the notebook.
+Check the dataset terms before redistributing the data.

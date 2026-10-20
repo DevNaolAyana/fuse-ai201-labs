@@ -1,0 +1,2 @@
+Place the actual browser application source code here and add the verified launch command to README.md.
+The written report describes browser tests but does not identify the framework or entry point.
