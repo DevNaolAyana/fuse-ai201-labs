@@ -1,3 +1,6 @@
 assignments/assignment-4-group-16-project/creditcard.csv
 assignments/assignment-5-module-5/data/creditcard.csv 
 assignments/assignment-6-module-6/data/creditcard.csv 
+assignments/assignment-6-module-6/mlruns/ 
+assignments/assignment-6-module-6/api/__pycache__/ 
+__pycache__/ 
