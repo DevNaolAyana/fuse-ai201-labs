@@ -8,3 +8,7 @@ streamlit
 xgboost
 imbalanced-learn
 joblib
+mlflow
+fastapi
+uvicorn
+pydantic
