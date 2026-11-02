@@ -1,4 +1,5 @@
 import os
+import time  # NEW: Needed for latency tracking
 from pathlib import Path
 from typing import Dict, Any, Optional
 import joblib
@@ -7,8 +8,9 @@ import numpy as np
 from fastapi import FastAPI, HTTPException, status
 from pydantic import BaseModel, Field
 
-# NEW: Import the settings
+# NEW: Import the settings and logging
 from api.config import get_settings
+from api.logging_db import init_db, log_prediction
 
 # Initialize FastAPI application
 app = FastAPI(
@@ -16,6 +18,9 @@ app = FastAPI(
     description="FastAPI service for real-time credit card fraud detection using trained XGBoost and SMOTE models.",
     version="1.0.0"
 )
+
+# NEW: Initialize the database
+init_db()
 
 # NEW: Load settings from environment variables
 settings = get_settings()
@@ -169,18 +174,13 @@ def health():
 
 @app.post("/predict", response_model=PredictionResponse, tags=["Inference"])
 def predict(transaction: TransactionInput):
-    """
-    Accepts 30 transaction features (Time, V1-V28, Amount),
-    standardizes Time and Amount using the saved scaler,
-    and returns fraud probability and decision.
-    """
     if model is None or scaler is None:
         load_artifacts()
 
-    try:
-        # Convert Pydantic model to dictionary
-        data = transaction.model_dump()
+    start_time = time.perf_counter() # NEW: Start timer
+    data = transaction.model_dump()
 
+    try:
         # Step 1: Standardize Time and Amount using the pre-fitted scaler
         time_amt_df = pd.DataFrame([[data["Time"], data["Amount"]]], columns=["Time", "Amount"])
         scaled_time_amt = scaler.transform(time_amt_df)
@@ -201,12 +201,32 @@ def predict(transaction: TransactionInput):
 
         decision = "Fraud" if (prediction == 1 or prob >= 0.5) else "Legitimate"
 
+        # NEW: Log the successful prediction
+        latency_ms = (time.perf_counter() - start_time) * 1000
+        log_prediction(
+            features=data, 
+            prob=round(prob, 4), 
+            decision=decision, 
+            model_version="1.0.0", 
+            latency_ms=latency_ms
+        )
+
         return PredictionResponse(
             fraud_probability=round(prob, 4),
             decision=decision
         )
 
     except Exception as e:
+        # NEW: Log the failure
+        latency_ms = (time.perf_counter() - start_time) * 1000
+        log_prediction(
+            features=data, 
+            prob=None, 
+            decision=None, 
+            model_version="1.0.0", 
+            latency_ms=latency_ms, 
+            status_code=500
+        )
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Inference error: {str(e)}"
