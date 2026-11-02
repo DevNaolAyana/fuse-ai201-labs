@@ -7,6 +7,9 @@ import numpy as np
 from fastapi import FastAPI, HTTPException, status
 from pydantic import BaseModel, Field
 
+# NEW: Import the settings
+from api.config import get_settings
+
 # Initialize FastAPI application
 app = FastAPI(
     title="Credit Card Fraud Detection API",
@@ -14,10 +17,10 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Resolve model artifact paths
-BASE_DIR = Path(__file__).resolve().parent.parent
-MODEL_PATH = BASE_DIR / "models" / "fraud_detector_model.pkl"
-SCALER_PATH = BASE_DIR / "models" / "feature_scaler.pkl"
+# NEW: Load settings from environment variables
+settings = get_settings()
+MODEL_PATH = Path(settings.model_path)
+SCALER_PATH = Path(settings.scaler_path)
 
 # Fallback path if run from project root
 if not MODEL_PATH.exists():
